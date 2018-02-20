@@ -1,4 +1,7 @@
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Main19 {
 
@@ -9,7 +12,14 @@ public class Main19 {
      */
 
     public static void main(String[] args) {
-
+        Map<String, Integer> a = new HashMap<>();
+        a.put("FBI", 3);
+        a.put("CIA", 3);
+        a.put("Homeland Security", 16);
+        a.put("NSA", 3);
+        a.put("NASA", 4);
+        a.put("SHIELD", 6);
+        System.out.println(rarest(a));
     }
 
     public static int rarest(Map<String, Integer> map) {
@@ -21,6 +31,27 @@ public class Main19 {
             }
         }
 
-        return -1;
+        Set<Integer> valueSet = new HashSet<>(map.values());
+        int rarest = -1;
+        int rarity = 0;
+
+        for (int setValue:valueSet) {
+            int counter = 0;
+
+            if (rarest != setValue) {
+                for (int mapValue : map.values()) {
+                    if (mapValue == setValue) {
+                        counter++;
+                    }
+                }
+
+                if (counter == rarity && setValue < rarest || counter < rarity || rarity == 0) {
+                    rarity = counter;
+                    rarest = setValue;
+                }
+            }
+        }
+
+        return rarest;
     }
 }
